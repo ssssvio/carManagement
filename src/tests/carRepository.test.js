@@ -4,8 +4,10 @@ const CarRepository = require('../repositories/carRepository');
 describe('CarRepository', () => {
   let carRepo;
 
-  before(() => {
+  before(async () => {
     carRepo = new CarRepository();
+    // Carregar dados antes de executar os testes
+    await carRepo.loadData();
   });
 
   it('should create a new car', async () => {
@@ -21,12 +23,23 @@ describe('CarRepository', () => {
   });
 
   it('should find a car by id', async () => {
-    const car = await carRepo.findById(1);
+    // Primeiro crie um carro para garantir que ele existe
+    const createdCar = await carRepo.create({
+      placa: 'ABC-1234',
+      chassi: '123456',
+      renavam: '654321',
+      modelo: 'Model S',
+      marca: 'Tesla',
+      ano: 2021,
+    });
+
+    const car = await carRepo.findById(createdCar.id); // Use o ID do carro criado
     assert.strictEqual(car.placa, 'ABC-1234');
   });
 
   it('should update a car', async () => {
-    await carRepo.create({
+    // Crie um carro antes de tentar atualizá-lo
+    const createdCar = await carRepo.create({
       placa: 'DEF-5678',
       chassi: '789123',
       renavam: '321987',
@@ -35,12 +48,15 @@ describe('CarRepository', () => {
       ano: 2022,
     });
 
-    const updatedCar = await carRepo.update(1, { modelo: 'Model X' });
+    const updatedCar = await carRepo.update(createdCar.id, {
+      modelo: 'Model X',
+    });
     assert.strictEqual(updatedCar.modelo, 'Model X');
   });
 
   it('should delete a car', async () => {
-    await carRepo.create({
+    // Crie um carro para garantir que ele existe
+    const createdCar = await carRepo.create({
       placa: 'GHI-91011',
       chassi: '456789',
       renavam: '654987',
@@ -49,10 +65,10 @@ describe('CarRepository', () => {
       ano: 2023,
     });
 
-    const deletedCar = await carRepo.delete(1);
-    assert.strictEqual(deletedCar.id, 1);
+    const deletedCar = await carRepo.delete(createdCar.id);
+    assert.strictEqual(deletedCar.id, createdCar.id);
 
-    const carAfterDelete = await carRepo.findById(1);
+    const carAfterDelete = await carRepo.findById(createdCar.id);
     assert.strictEqual(carAfterDelete, undefined);
   });
 });

@@ -23,8 +23,12 @@ class CarRepository {
   }
 
   async create(car) {
-    const lastCar = this.cars[this.cars.length - 1];
-    car.id = lastCar ? lastCar.id + 1 : 1;
+    let newId = 1;
+    if (this.cars.length > 0) {
+      const lastCar = this.cars[this.cars.length - 1];
+      newId = lastCar.id + 1;
+    }
+    car.id = newId;
     this.cars.push(car);
     await this.saveData();
     return car;
@@ -45,17 +49,18 @@ class CarRepository {
       await this.saveData();
       return this.cars[carIndex];
     }
-    return;
+    return null; // Retorna null se o carro não for encontrado
   }
 
   async delete(id) {
-    const car = this.findById(id);
-    if (car) {
-      this.cars = this.cars.filter((car) => car.id !== id);
+    const carIndex = this.cars.findIndex((car) => car.id === id);
+    if (carIndex >= 0) {
+      const deletedCar = this.cars[carIndex];
+      this.cars.splice(carIndex, 1); // Remove o carro
       await this.saveData();
-      return car;
+      return deletedCar; // Retorna o carro deletado
     }
-    return;
+    return null; // Retorna null se o carro não for encontrado
   }
 }
 
