@@ -2,7 +2,7 @@
   "name": "backcarrental",
   "version": "1.0.0",
   "description": "",
-  "main": ".eslintrc.js",
+  "main": "src/main.js",
   "scripts": {
     "start": "node src/main.js",
     "test": ""
