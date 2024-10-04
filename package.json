@@ -4,8 +4,8 @@
   "description": "",
   "main": "src/main.js",
   "scripts": {
-    "start": "node src/main.js",
-    "test": ""
+    "start": "nodemon src/main.js",
+    "test": "mocha src/tests/*.js"
   },
   "keywords": [],
   "author": "",
@@ -13,8 +13,7 @@
   "dependencies": {
     "dotenv": "^16.4.5",
     "express": "^4.21.0",
-    "fs": "^0.0.1-security",
-    "uuid": "^10.0.0"
+    "fs": "^0.0.1-security"
   },
   "devDependencies": {
     "mocha": "^10.7.3"

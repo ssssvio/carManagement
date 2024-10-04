@@ -1,56 +1,43 @@
 const express = require('express');
-const CarService = require('../services/carService');
+const CarRepository = require('../repositories/carRepository');
 
 const router = express.Router();
-const carService = new CarService();
+const carRepo = new CarRepository();
 
-router.post('/', async (req, res) => {
-  try {
-    const newCar = req.body;
-    const createdCar = await carService.create(newCar);
-    res.status(201).json(createdCar);
-  } catch (error) {
-    res.status(400).json({ message: error.message });
-  }
+router.get('/', async (req, res) => {
+  const cars = carRepo.findAll();
+  res.status(200).json(cars);
 });
 
 router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    const car = await carService.getCar(id);
+  const car = carRepo.findById(Number(req.params.id));
+  if (car) {
     res.status(200).json(car);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
+  } else {
+    res.status(404).json({ message: 'Car not found.' });
   }
 });
 
-router.get('/', async (req, res) => {
-  try {
-    const cars = await carService.getAllCars();
-    res.status(200).json(cars);
-  } catch (error) {
-    res.status(500).json({ message: error.message });
-  }
+router.post('/', async (req, res) => {
+  const newCar = await carRepo.create(req.body);
+  res.status(201).json(newCar);
 });
 
 router.put('/:id', async (req, res) => {
-  const { id } = req.params;
-  const updatedCar = req.body;
-  try {
-    const car = await carService.updateCar(id, updatedCar);
-    res.status(200).json(car);
-  } catch (error) {
-    res.status(404).json({ message: error.message });
+  const updatedCar = await carRepo.update(Number(req.params.id), req.body);
+  if (updatedCar) {
+    res.status(200).json(updatedCar);
+  } else {
+    res.status(404).json({ message: 'Car not found.' });
   }
 });
 
 router.delete('/:id', async (req, res) => {
-  const { id } = req.params;
-  try {
-    await carService.deleteCar(id);
+  const deletedCar = await carRepo.delete(Number(req.params.id));
+  if (deletedCar) {
     res.status(204).send();
-  } catch (error) {
-    res.status(404).json({ message: error.message });
+  } else {
+    res.status(404).json({ message: 'Car not found.' });
   }
 });
 

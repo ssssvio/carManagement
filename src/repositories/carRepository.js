@@ -1,4 +1,4 @@
-const fs = require('fs');
+const fs = require('fs').promises;
 const path = require('path');
 
 const filePath = path.join(__dirname, '../../data/cars.json');
@@ -9,20 +9,24 @@ class CarRepository {
     this.loadData();
   }
 
-  loadData() {
-    if (fs.existsSync(filePath)) {
-      const data = fs.readFileSync(filePath, 'utf-8');
-      this.cars = JSON.parse(data) || [];
+  async loadData() {
+    try {
+      const data = await fs.readFile(filePath, 'utf-8');
+      this.cars = JSON.parse(data);
+    } catch (error) {
+      this.cars = [];
     }
   }
 
-  saveData() {
-    fs.writeFileSync(filePath, JSON.stringify(this.cars, null, 2));
+  async saveData() {
+    await fs.writeFile(filePath, JSON.stringify(this.cars, null, 2));
   }
 
-  create(car) {
+  async create(car) {
+    const lastCar = this.cars[this.cars.length - 1];
+    car.id = lastCar ? lastCar.id + 1 : 1;
     this.cars.push(car);
-    this.saveData();
+    await this.saveData();
     return car;
   }
 
@@ -34,24 +38,24 @@ class CarRepository {
     return this.cars;
   }
 
-  update(id, updatedCar) {
+  async update(id, updatedCar) {
     const carIndex = this.cars.findIndex((car) => car.id === id);
     if (carIndex >= 0) {
       this.cars[carIndex] = { ...this.cars[carIndex], ...updatedCar };
-      this.saveData();
+      await this.saveData();
       return this.cars[carIndex];
     }
-    return null;
+    return;
   }
 
-  delete(id) {
+  async delete(id) {
     const car = this.findById(id);
     if (car) {
       this.cars = this.cars.filter((car) => car.id !== id);
-      this.saveData();
+      await this.saveData();
       return car;
     }
-    return null;
+    return;
   }
 }
 
