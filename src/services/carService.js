@@ -1,26 +1,29 @@
-const CarRepository = require('../repositories/carRepository');
-const carRepository = new CarRepository();
+const GetCarUsecase = require('../usecases/get-car.usecase');
+const PostCarUsecase = require('../usecases/post-car.usecase');
+const UpdateCarUseCase = require('../usecases/put-car.usecase');
+const DeleteCarUsecase = require('../usecases/delete-car.usecase');
+const GetAllCarsUsecase = require('../usecases/get-all-cars.usecase');
 
 class CarService {
-  create(car) {
-    return carRepository.create(car);
+  createCar(car) {
+    return PostCarUsecase.execute(car);
   }
 
-  getCar(id) {
-    return carRepository.findById(id);
+  getCarById(id) {
+    return GetCarUsecase.execute(id);
   }
 
-  getAllCars() {
-    return carRepository.findAll();
+  GetAllCars() {
+    return GetAllCarsUsecase.execute();
   }
 
   updateCar(id, updatedCar) {
-    return carRepository.update(id, updatedCar);
+    return UpdateCarUseCase.execute(id, updatedCar);
   }
 
   deleteCar(id) {
-    return carRepository.delete(id);
+    return DeleteCarUsecase.execute(id);
   }
 }
 
-module.exports = CarService;
+module.exports = new CarService();

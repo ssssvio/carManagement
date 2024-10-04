@@ -5,7 +5,6 @@ const filePath = path.join(__dirname, '../../data/cars.json');
 
 class CarRepository {
   constructor() {
-    super();
     this.cars = [];
     this.loadData();
   }
@@ -46,11 +45,11 @@ class CarRepository {
   }
 
   delete(id) {
-    const carIndex = this.cars.findIndex((car) => car.id === id);
-    if (carIndex >= 0) {
-      const deletedCar = this.cars.splice(carIndex, 1);
+    const car = this.findById(id);
+    if (car) {
+      this.cars = this.cars.filter((car) => car.id !== id);
       this.saveData();
-      return deletedCar;
+      return car;
     }
     return null;
   }
