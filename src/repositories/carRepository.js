@@ -1,10 +1,9 @@
 const fs = require('fs');
 const path = require('path');
-const CarRepositoryInterface = require('../common/interfaces/carRepositoryInterface');
 
 const filePath = path.join(__dirname, '../../data/cars.json');
 
-class CarRepository extends CarRepositoryInterface {
+class CarRepository {
   constructor() {
     super();
     this.cars = [];
