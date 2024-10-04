@@ -49,18 +49,18 @@ class CarRepository {
       await this.saveData();
       return this.cars[carIndex];
     }
-    return null; // Retorna null se o carro não for encontrado
+    return null;
   }
 
   async delete(id) {
     const carIndex = this.cars.findIndex((car) => car.id === id);
     if (carIndex >= 0) {
       const deletedCar = this.cars[carIndex];
-      this.cars.splice(carIndex, 1); // Remove o carro
+      this.cars.splice(carIndex, 1);
       await this.saveData();
-      return deletedCar; // Retorna o carro deletado
+      return deletedCar;
     }
-    return null; // Retorna null se o carro não for encontrado
+    return null;
   }
 }
 

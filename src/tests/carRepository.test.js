@@ -6,7 +6,7 @@ describe('CarRepository', () => {
 
   before(async () => {
     carRepo = new CarRepository();
-    // Carregar dados antes de executar os testes
+
     await carRepo.loadData();
   });
 
@@ -23,7 +23,6 @@ describe('CarRepository', () => {
   });
 
   it('should find a car by id', async () => {
-    // Primeiro crie um carro para garantir que ele existe
     const createdCar = await carRepo.create({
       placa: 'ABC-1234',
       chassi: '123456',
@@ -33,12 +32,11 @@ describe('CarRepository', () => {
       ano: 2021,
     });
 
-    const car = await carRepo.findById(createdCar.id); // Use o ID do carro criado
+    const car = await carRepo.findById(createdCar.id);
     assert.strictEqual(car.placa, 'ABC-1234');
   });
 
   it('should update a car', async () => {
-    // Crie um carro antes de tentar atualizá-lo
     const createdCar = await carRepo.create({
       placa: 'DEF-5678',
       chassi: '789123',
@@ -55,7 +53,6 @@ describe('CarRepository', () => {
   });
 
   it('should delete a car', async () => {
-    // Crie um carro para garantir que ele existe
     const createdCar = await carRepo.create({
       placa: 'GHI-91011',
       chassi: '456789',
