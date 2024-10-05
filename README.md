@@ -91,7 +91,13 @@ Esta é uma API RESTful para gerenciamento de carros. A API permite criar, ler, 
    npm install
    ```
 
-3. Inicie o servidor:
+3. Crie o arquivo (.env) e defina (PORT) como 3000 :
+
+   ```bash
+   cp .env.example .env
+   ```
+
+4. Inicie o servidor:
    ```bash
    npm run start
    ```
