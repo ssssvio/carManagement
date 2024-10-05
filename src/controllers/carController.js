@@ -1,16 +1,16 @@
 const express = require('express');
-const { CarService } = require('../../services/carService');
+const CarService = require('../services/carService');
 
 const router = express.Router();
 const carService = new CarService();
 
 router.get('/', async (req, res) => {
-  const cars = carService.findAll();
+  const cars = await carService.findAll();
   res.status(200).json(cars);
 });
 
 router.get('/:id', async (req, res) => {
-  const car = carService.findById(Number(req.params.id));
+  const car = await carService.findById(Number(req.params.id));
   if (car) {
     res.status(200).json(car);
   } else {

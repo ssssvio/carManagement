@@ -1,24 +1,31 @@
-const fs = require('fs').promises;
+const fs = require('fs');
 const path = require('path');
 
-const filePath = path.join(__dirname, '../../data/cars.json');
-
-export class CarRepository {
+class CarRepository {
   constructor() {
+    this.filePath = path.join(__dirname, '../../data/cars.json');
     this.cars = [];
     this.loadData();
   }
 
   async loadData() {
-    try {
-      const data = await fs.readFile(filePath, 'utf-8');
+    if (fs.existsSync(this.filePath)) {
+      const data = await fs.promises.readFile(this.filePath, 'utf8');
       this.cars = JSON.parse(data);
-    } catch (error) {
-      this.cars = [];
     }
   }
 
-  async saveData() {
-    await fs.writeFile(filePath, JSON.stringify(this.cars, null, 2));
+  async saveData(cars) {
+    await fs.promises.writeFile(this.filePath, JSON.stringify(cars, null, 2));
+  }
+
+  async findAll() {
+    return this.cars;
+  }
+
+  async findById(id) {
+    return this.cars.find((car) => car.id === id);
   }
 }
+
+module.exports = CarRepository;
