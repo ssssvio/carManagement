@@ -98,6 +98,14 @@ Esta é uma API RESTful para gerenciamento de carros. A API permite criar, ler, 
 
 O servidor estará rodando em `http://localhost:3000`.
 
+## Rodar os Testes
+
+Para rodar os testes, use o comando:
+
+```bash
+npm test
+```
+
 ## Contribuição
 
 Se você deseja contribuir com este projeto, fique à vontade para abrir uma issue ou enviar um pull request.

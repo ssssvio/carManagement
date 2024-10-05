@@ -12,12 +12,12 @@ describe('CarRepository', () => {
 
   it('should create a new car', async () => {
     const car = await carRepo.create({
-      placa: 'ABC-1234',
-      chassi: '123456',
-      renavam: '654321',
-      modelo: 'Model S',
-      marca: 'Tesla',
-      ano: 2021,
+      placa: 'ABC-1212',
+      chassi: '12345999999632144',
+      renavam: '654327565651',
+      modelo: 'Corolla Cross',
+      marca: 'Toyota',
+      ano: 2023,
     });
     assert.strictEqual(car.id, 1);
   });
@@ -25,11 +25,11 @@ describe('CarRepository', () => {
   it('should find a car by id', async () => {
     const createdCar = await carRepo.create({
       placa: 'ABC-1234',
-      chassi: '123456',
-      renavam: '654321',
-      modelo: 'Model S',
+      chassi: '12345123333369172',
+      renavam: '654321999967',
+      modelo: 'Cybertruck',
       marca: 'Tesla',
-      ano: 2021,
+      ano: 2024,
     });
 
     const car = await carRepo.findById(createdCar.id);
@@ -39,26 +39,26 @@ describe('CarRepository', () => {
   it('should update a car', async () => {
     const createdCar = await carRepo.create({
       placa: 'DEF-5678',
-      chassi: '789123',
-      renavam: '321987',
-      modelo: 'Model 3',
-      marca: 'Tesla',
+      chassi: '78912391818828228',
+      renavam: '32198182927',
+      modelo: 'Corolla Cross',
+      marca: 'Honda',
       ano: 2022,
     });
 
     const updatedCar = await carRepo.update(createdCar.id, {
-      modelo: 'Model X',
+      modelo: 'Civic',
     });
-    assert.strictEqual(updatedCar.modelo, 'Model X');
+    assert.strictEqual(updatedCar.modelo, 'Civic');
   });
 
   it('should delete a car', async () => {
     const createdCar = await carRepo.create({
       placa: 'GHI-91011',
-      chassi: '456789',
-      renavam: '654987',
-      modelo: 'Model Y',
-      marca: 'Tesla',
+      chassi: '45678967677277227',
+      renavam: '65498723314',
+      modelo: 'Nivus',
+      marca: 'Volkswagen',
       ano: 2023,
     });
 
