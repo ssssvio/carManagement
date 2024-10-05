@@ -7,7 +7,8 @@ Esta é uma API RESTful para gerenciamento de carros. A API permite criar, ler, 
 - Node.js
 - Express
 - Mocha
-- JSON para armazenamento de dados
+- Fs
+- Dotenv
 
 ## Endpoints
 
