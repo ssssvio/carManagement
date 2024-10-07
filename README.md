@@ -115,7 +115,3 @@ npm test
 ## Contribuição
 
 Se você deseja contribuir com este projeto, fique à vontade para abrir uma issue ou enviar um pull request.
-
-## Licença
-
-Este projeto está licenciado sob a [MIT License](LICENSE).
